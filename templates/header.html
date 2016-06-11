@@ -1,0 +1,48 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<script type=text/javascript>$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script src="{{ url_for('static', filename='js/jquery-ui.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+		
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-theme.css') }}">		
+		
+		<title>Braden Fitz-Gerald</title>
+			
+	</head>
+	
+	
+	<header>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/" title="Return Home">
+						<img style="height:120%" src="{{ url_for('static', filename='images/Mountain_icon.png' ) }}">
+					</a>
+				</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					
+					<ul class="nav navbar-nav">
+						<li><a href="/aboutme/">About Me</a></li>
+						<li><a href="/webapps/">Web Applications</a></li>
+						<li><a href="/dataanalysis/">Data Analysis</a></li>
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+		</nav>
+	</header>
+	
+	<body>	
+	{% block body %}
+	
+	{% endblock %}
+	
+	</body>
+</html>

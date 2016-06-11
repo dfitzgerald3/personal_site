@@ -1,0 +1,109 @@
+{% extends "header.html" %}
+{% block body %}
+
+	<script src="http://cdn.pydata.org/bokeh/release/bokeh-0.10.0.min.js"></script>
+		
+	<link href="http://cdn.pydata.org/bokeh/release/bokeh-0.10.0.min.css" rel="stylesheet" type="text/css">
+	
+	<div class = "container-fluid">
+		<div style = "width: 1400px; margin: auto">
+			<form id="filter">
+				<label for="stateSelect"> Filter by State</label>
+				<select id="stateSelect" name="stateSelect">
+						<option value="all"> All </option>
+						{% for state in state_list %}
+						<option value="{{ state }} "> {{ state[0] }} </option>
+						{% endfor %}		
+				</select>
+				
+				<label for="demographicsSelect"> Choose Attribute to Display </label>
+				<select id="demographicsSelect" name="demographicsSelect">
+					{% for attr in demographics_list %}
+						<option value="{{ attr }}"> {{ attr[1] }} </option>
+					{% endfor %}
+				</select>
+				
+				<button class='btn btn-default btn-sm' type="button" id="submit">Update</button>
+			</form>
+		</div>
+	
+	
+		
+		<div id="map" style="width: 1400px; margin: 0 auto">
+		
+			<div id="scripts">
+				{{ script | safe }}
+
+				{{ div | safe }}
+			</div>
+			
+		</div>
+		
+		<script>
+			var state = document.getElementById('stateSelect');
+			var attribute = document.getElementById('demographicsSelect');
+			var subbtn = document.getElementById('submit');
+			
+			var width = window.innerWidth;
+			var height = window.innerHeight;
+			
+			console.log(width)
+			
+			var state_sel = state.options[state.selectedIndex].text;
+			var attribute_sel = attribute.options[attribute.selectedIndex].text;
+			
+			//console.log(state_sel)
+			
+			subbtn.onclick = function() {
+				var state_sel = state.options[state.selectedIndex].text;
+				var attribute_sel = attribute.options[attribute.selectedIndex].text;
+				//console.log(state_sel.toString())
+				//console.log(attribute_sel.toString())
+				
+				$.ajax({
+					type: "POST",
+					url: '/update_map', 
+					data: JSON.stringify({
+						state: state_sel.toString(),
+						attribute: attribute_sel.toString(),
+						width: width.toString(),
+						height: height.toString()
+						}),
+					contentType:"application/json; charset=utf-8",
+					dataType: "json",
+					
+					
+					success: function(result) {
+						var scripts = [];
+						for (var item in result){
+							var value = result[item];
+							//console.log(value)
+							scripts.push(value);
+						
+						};
+						
+						//console.log(scripts[0][0])
+						
+						var div = scripts[0][0];
+						var script = scripts[0][1];
+						
+						
+						$('#scripts').html(function() {
+							return script + div;
+						});
+						
+						
+					},
+					
+					fail: function() {
+						console.log("shit")
+					}
+				})
+			};
+			
+			
+			
+		</script>
+	</div>
+ 
+{% endblock %}}

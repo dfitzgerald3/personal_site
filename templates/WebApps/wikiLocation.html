@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+		<meta charset="utf-8">
+		
+		<script type=text/javascript>$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script src="{{ url_for('static', filename='js/jquery-ui.min.js') }}"></script>
+		
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">		
+		
+		<title>WikiLocations</title>
+			
+		<h1 id="title">WikiLocations</h1>
+			<hr>
+			<br>
+	</head>
+	
+	
+	<body>
+		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+		
+		<div id="map"></div>
+		
+		<script src="{{ url_for('static', filename='js/initAutocomplete.js')  }}"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7g1kumI4PRPFr_iM2roLEESTBNscUtXY&libraries=places&callback=initAutocomplete"
+         async defer></script>
+
+	</body>		
+		<div id="dialog-message">
+			<p>
+				<img src="{{ url_for('static', filename='images/ajax-loader.gif') }}" align="middle">
+				Loading
+			</p>
+		</div>
+
+
+	</body>
+</html>
